@@ -1,0 +1,76 @@
+{
+  "configVersion": "v2",
+  "app": {
+    "appId": 28999,
+    "appName": "Color WD Active",
+    "appType": "watchface",
+    "version": {
+      "code": 1,
+      "name": "1.0.0"
+    },
+    "vender": "nimrod100",
+    "description": "Color WD Active",
+    "icon": "images/preview.png"
+  },
+  "permissions": ["gps"],
+  "runtime": {
+    "apiVersion": {
+      "compatible": "1.0.0",
+      "target": "1.0.0",
+      "minVersion": "1.0.0"
+    }
+  },
+  "targets": {
+    "gts3": {
+      "module": {
+        "watchface": {
+          "path": "watchface/entry/gts3/index",
+          "main": 1,
+          "editable": 1,
+          "lockscreen": 1
+        },
+        "app-side": {
+          "path": "app-side/index"
+        }
+      },
+      "platforms": [
+        {
+          "name": "active1",
+          "deviceSource": 8323328
+        },
+        {
+          "name": "active2",
+          "deviceSource": 8323329
+        },
+        {
+          "name": "cheetah",
+          "deviceSource": 8257793
+        },
+        {
+          "name": "gts4-1",
+          "deviceSource": 7995648
+        },
+        {
+          "name": "gts4-2",
+          "deviceSource": 7995649
+        },
+        {
+          "name": "gts3-1",
+          "deviceSource": 224
+        },
+        {
+          "name": "gts3-2",
+          "deviceSource": 225
+        }
+      ],
+      "designWidth": 390
+    }
+  },
+  "i18n": {
+    "en-US": {
+      "name": "Timer"
+    }
+  },
+  "defaultLanguage": "en-US",
+  "debug": true
+}
