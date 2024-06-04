@@ -107,13 +107,10 @@ export class WatchdripV3 {
 			{
 				this.updateWidgets();
 			}
-			else
-			{
-				this.forceFetchInfo();
-			}
 			if (this.intervalTimerForce === null) //already started
 			{
-				this.updatingData = false;
+                this.firstRun = true;
+                this.updatingData = false;
 				this.intervalTimerForce = this.globalNS.setInterval(() => {
 					this.forceFetchInfo();			
 				}, 5000);
@@ -124,21 +121,14 @@ export class WatchdripV3 {
 					if(this.readValueInfo())
 					{
 						this.updateWidgets();
-						if(this.nextUpdateTime<=this.timeSensor.utc)
-						{
-							this.forceFetchInfo();
-						}
 					}
-					else
-					{
-						this.forceFetchInfo();
-					}
+                    this.firstRun = true;
 					if(this.intervalTimerForce === null)
 					{
-						this.updatingData = false;
+                        this.updatingData = false;
 						this.intervalTimerForce = this.globalNS.setInterval(() => {
 							this.forceFetchInfo();			
-						}, 5000);
+						}, 1000);
 					}
                 },
                 pause_call: () => {
@@ -318,7 +308,15 @@ export class WatchdripV3 {
     forceFetchInfo() {
 		
 		if(!hmBle.connectStatus())
+		{
+			let actualValue=this.watchdripData.getTimeAgo(this.watchdripData.getBg().time);
+			if(lastTimeValue!=actualValue)
+			{
+				this.updateTimesWidget();
+				lastTimeValue=actualValue;
+			}			
 			return;
+		}
 		
 		if(this.updatingData)
 			return;
@@ -328,21 +326,18 @@ export class WatchdripV3 {
 		{
 			this.resetLastUpdate();
 			this.updatingData = true;
-			let updating=((this.watchdripData.getBg().time+305000)<=this.timeSensor.utc);
-			if(updating)
-				this.updateStart();
-			this.readValueInfo();
-			if(updating)
-				this.updateFinish();					
-			this.updateWidgets();
-			this.updatingData = false;
-			if(this.nextUpdateTime<=this.timeSensor.utc)
+			if(this.nextUpdateTime<=this.timeSensor.utc && !this.firstRun)
 			{
 				hmApp.startApp({ appid: WATCHDRIP_APP_ID, url: 'page/index', param: 'update_local' });				
-			}
+                this.readValueInfo();
+            }
+            this.updateWidgets();
+			this.updatingData = false;
+            this.firstRun = false;
 		}
 		else
 		{
+            this.firstRun = false;
 			let actualValue=this.watchdripData.getTimeAgo(this.watchdripData.getBg().time);
 			if(lastTimeValue!=actualValue)
 			{
@@ -350,11 +345,10 @@ export class WatchdripV3 {
 				lastTimeValue=actualValue;
 			}			
 		}
-		
 	}
 
     createWatchdripDir() {
-        if (USE_FILE_INFO_STORAGE) {// && !this.isAOD()) {
+        if (USE_FILE_INFO_STORAGE) {
             if (!fs.statSync(WF_INFO_DIR)) {
                 fs.mkdirSync(WF_INFO_DIR);
             }
@@ -362,107 +356,25 @@ export class WatchdripV3 {
     }
 	
     readValueInfo() {
-        /*let info = "";
-		const mini_app_id = Number(WATCHDRIP_APP_ID);
-		const file_name = "glucose.json";
-  
-		let salir=false;
-  
-		try {
-			const fh = hmFS.open(file_name, hmFS.O_RDONLY, {
-				appid: mini_app_id
-			})
-
-			while(!salir)
-			{
-				const len = 512;
-				let array_buffer = new ArrayBuffer(len);
-				hmFS.read(fh, array_buffer, 0, len);
-				info+=ab2str(array_buffer);
-				var bufView = new Uint8Array(array_buffer)
-				if(bufView[511]==0)
-				{
-					salir=true;
-				}
-			}
-			hmFS.close(fh);
-		} catch (error) {
-			//this.updateLog("ERROR "+error);
-			info = "";
-		}
-		info=info.replace(/\0/g, '');
-
-		//info = hmFS.SysProGetChars('fs_last_info')
-		if(info!==null && info!=undefined)
-		{
-			//this.updateLog("info length "+info.length);
-			if (info) {
-				//this.updateLog("INFO NO NULO");
-				let data = {};*/
-                let data = this.infoFile.fetchJSON();
-                if (data) 
-                {
-				    //this.updateLog("DATA");
-				    try {
-					    //data = str2json(info);
-					    //this.updateLog("DATA TO JSON");
-					    //info = null;
-					    //debug.log("data was read");
-					    let oldTime=this.watchdripData.getBg().time;
-					    this.watchdripData.setData(data); 
-					    //this.updateLog("SET DATA");
-					    this.watchdripData.timeDiff = 0;
-					    this.nextUpdateTime=this.watchdripData.getBg().time+305000;
-				    } catch (e) {
-					    //info = null;
-					    //this.updateLog("readValueInfo error:" + e);
-				    }
-				    data = null;
-				    return true
-			    }
-		//}
+        let data = this.infoFile.fetchJSON();
+        if (data) 
+        {
+		    try {
+			    //this.updateLog("DATA TO JSON");
+			    //debug.log("data was read");
+		        let oldTime=this.watchdripData.getBg().time;
+			    this.watchdripData.setData(data); 
+			    //this.updateLog("SET DATA");
+			    this.watchdripData.timeDiff = 0;
+			    this.nextUpdateTime=this.watchdripData.getBg().time+305000;
+			} catch (e) {
+			    //this.updateLog("readValueInfo error:" + e);
+		    }
+		    data = null;
+		    return true
+	    }
         return false;
     }
-	
-
-    /*readInfo() {
-        let info = "";
-        if (USE_FILE_INFO_STORAGE) {
-            info = fs.readTextFile(WF_INFO_FILE);
-        } else {
-            info = hmFS.SysProGetChars(WF_INFO);
-        }
-        if (info) {
-            let data = {};
-            try {
-                data = str2json(info);
-                info = null;
-                //debug.log("data was read");
-                this.watchdripData.setData(data); 
-                this.watchdripData.timeDiff = 0;
-				this.nextUpdateTime=this.watchdripData.getBg().time+305000;
-            } catch (e) {
-				info = null;
-				//debug.log("readInfo error:" + e);
-            }
-            data = null;
-            return true
-        }
-        return false;
-    }
-
-    saveInfo(info) {
-        if (USE_FILE_INFO_STORAGE) {
-            fs.writeTextFile(WF_INFO_FILE, info);
-        } else {
-            hmFS.SysProSetChars(WF_INFO, info);
-        }
-        this.lastUpdateSucessful = true;
-        let time = this.timeSensor.utc;
-        hmFS.SysProSetInt64(WF_INFO_LAST_UPDATE, time);
-        hmFS.SysProSetBool(WF_INFO_LAST_UPDATE_SUCCESS, this.lastUpdateSucessful);
-        return time;
-    }*/
 
     /*Read config which is defined in the app. If not defined, init config*/
     readConfig() {
@@ -496,7 +408,6 @@ export class WatchdripV3 {
     }
 
     destroy() {
-        //this.stopDataUpdates();
         if (this.intervalTimerForce != null) {
             //debug.log("stopDataUpdates");
             this.globalNS.clearInterval(this.intervalTimerForce);
