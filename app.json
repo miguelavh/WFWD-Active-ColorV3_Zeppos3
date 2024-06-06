@@ -2,14 +2,14 @@
   "configVersion": "v2",
   "app": {
     "appId": 28999,
-    "appName": "Color WD Active",
+    "appName": "Color WD",
     "appType": "watchface",
     "version": {
       "code": 1,
-      "name": "1.0.0"
+      "name": "2.0.0"
     },
     "vender": "nimrod100",
-    "description": "Color WD Active",
+    "description": "Color WD",
     "icon": "images/preview.png"
   },
   "permissions": ["gps"],
@@ -64,6 +64,42 @@
         }
       ],
       "designWidth": 390
+    },
+    "bip": {
+      "module": {
+        "watchface": {
+          "path": "watchface/entry/bip/index",
+          "main": 1,
+          "editable": 1,
+          "lockscreen": 1
+        },
+        "app-side": {
+          "path": "app-side/index"
+        }
+      },
+      "platforms": [
+        {
+          "name": "bip5unity1",
+          "deviceSource": 8782081
+        },
+        {
+          "name": "bip5unity2",
+          "deviceSource": 8782088
+        },
+        {
+          "name": "bip5unity3",
+          "deviceSource": 8782089
+        },
+        {
+          "name": "bip5-1",
+          "deviceSource": 8454400
+        },
+        {
+          "name": "bip5-2",
+          "deviceSource": 8454401
+        }
+      ],
+      "designWidth": 320
     }
   },
   "i18n": {

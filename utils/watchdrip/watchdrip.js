@@ -6,8 +6,8 @@ import {
     WATCHDRIP_CONFIG_DEFAULTS,
     WATCHDRIP_CONFIG_LAST_UPDATE,
     WF_INFO,
-    WF_INFO_DIR,
-    WF_INFO_FILE,
+    WF_INFO_DIR_LOCAL,
+    WF_INFO_FILE_LOCAL,
     WF_INFO_LAST_UPDATE,
     WF_INFO_LAST_UPDATE_ATTEMPT,
     WF_INFO_LAST_UPDATE_SUCCESS
@@ -398,17 +398,26 @@ export class Watchdrip {
 		
 		if(this.updatingData)
 			return;
+
+        if(!hmBle.connectStatus())
+		{
+			let actualValue=this.watchdripData.getTimeAgo(this.watchdripData.getBg().time);
+			if(lastTimeValue!=actualValue)
+			{
+				this.updateTimesWidget();
+				lastTimeValue=actualValue;
+			}			
+			return;
+		}
+
 		this.lastUpdateAttempt = this.timeSensor.utc;
 
+		//this.updateTimesWidget();
+		
 		if(this.nextUpdateTime<=this.timeSensor.utc)
 		{
 			this.resetLastUpdate();
 			this.initConnection();
-
-			if (this.messageBuilder.connectStatus() === false) {
-				//debug.log("No BT Connection");
-				return;
-			}
 			this.updatingData = true;
 			this.updateStart();
 			
@@ -483,13 +492,12 @@ export class Watchdrip {
 				lastTimeValue=actualValue;
 			}			
 		}
-		
 	}
 
     createWatchdripDir() {
         if (USE_FILE_INFO_STORAGE) {// && !this.isAOD()) {
-            if (!fs.statSync(WF_INFO_DIR)) {
-                fs.mkdirSync(WF_INFO_DIR);
+            if (!fs.statSync(WF_INFO_DIR_LOCAL)) {
+                fs.mkdirSync(WF_INFO_DIR_LOCAL);
             }
             // const [fileNameArr] = hmFS.readdir("/storage");
             // debug.log(fileNameArr);
@@ -499,7 +507,7 @@ export class Watchdrip {
     readInfo() {
         let info = "";
         if (USE_FILE_INFO_STORAGE) {
-            info = fs.readTextFile(WF_INFO_FILE);
+            info = fs.readTextFile(WF_INFO_FILE_LOCAL);
         } else {
             info = hmFS.SysProGetChars(WF_INFO);
         }
@@ -524,7 +532,7 @@ export class Watchdrip {
 
     saveInfo(info) {
         if (USE_FILE_INFO_STORAGE) {
-            fs.writeTextFile(WF_INFO_FILE, info);
+            fs.writeTextFile(WF_INFO_FILE_LOCAL, info);
         } else {
             hmFS.SysProSetChars(WF_INFO, info);
         }
