@@ -14,6 +14,8 @@ export const WF_INFO_DIR = "/storage/js_apps/data/watchdrip";
 export const WF_INFO_FILE = WF_INFO_DIR + "/info.json";
 export const WF_INFO_DIR_LOCAL = "/storage/watchdrip";
 export const WF_INFO_FILE_LOCAL = WF_INFO_DIR_LOCAL + "/info.json";
+export const WF_CTRL_FILE = WF_INFO_DIR_LOCAL + "/control.dat";
+
 
 export const WATCHDRIP_CONFIG_DEFAULTS = {
     disableUpdates: false,

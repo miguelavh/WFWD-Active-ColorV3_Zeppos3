@@ -657,7 +657,7 @@ WatchFace({
                     watchdrip.setUpdateTimesWidgetCallback(this.updateTimesWidget);
                     watchdrip.setOnUpdateStartCallback(this.updateStart);
                     watchdrip.setOnUpdateFinishCallback(this.updateFinish);
-                    watchdrip.setOnUpdateLog(this.updateLog);
+                    //watchdrip.setOnUpdateLog(this.updateLog);
 					//watchdrip.graph=null;
 					
 

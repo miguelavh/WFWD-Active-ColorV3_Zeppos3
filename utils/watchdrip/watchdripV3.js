@@ -7,6 +7,8 @@ import {
     WATCHDRIP_CONFIG_LAST_UPDATE,
     WF_INFO,
     WF_INFO_DIR,
+    WF_INFO_DIR_LOCAL,
+    WF_CTRL_FILE,
     WF_INFO_FILE,
     WF_INFO_LAST_UPDATE,
     WF_INFO_LAST_UPDATE_ATTEMPT,
@@ -75,7 +77,6 @@ export class WatchdripV3 {
         this.configLastUpdate = 0;
         this.updatingData = false;
         this.intervalTimer = null;
-        this.firstRun = true;
         this.resumeCall = false;
 		this.intervalTimerForce = null;
 		this.nextUpdateTime= null;
@@ -109,7 +110,6 @@ export class WatchdripV3 {
 			}
 			if (this.intervalTimerForce === null) //already started
 			{
-                this.firstRun = true;
                 this.updatingData = false;
 				this.intervalTimerForce = this.globalNS.setInterval(() => {
 					this.forceFetchInfo();			
@@ -122,7 +122,6 @@ export class WatchdripV3 {
 					{
 						this.updateWidgets();
 					}
-                    this.firstRun = true;
 					if(this.intervalTimerForce === null)
 					{
                         this.updatingData = false;
@@ -326,18 +325,19 @@ export class WatchdripV3 {
 		{
 			this.resetLastUpdate();
 			this.updatingData = true;
-			if(this.nextUpdateTime<=this.timeSensor.utc && !this.firstRun)
+            //this.readValueInfo();
+			if(this.nextUpdateTime<=this.timeSensor.utc)
 			{
+                this.nextUpdateTime=this.timeSensor.utc+10000;
+                this.saveControl(this.nextUpdateTime);
 				hmApp.startApp({ appid: WATCHDRIP_APP_ID, url: 'page/index', param: 'update_local' });				
                 this.readValueInfo();
             }
             this.updateWidgets();
 			this.updatingData = false;
-            this.firstRun = false;
 		}
 		else
 		{
-            this.firstRun = false;
 			let actualValue=this.watchdripData.getTimeAgo(this.watchdripData.getBg().time);
 			if(lastTimeValue!=actualValue)
 			{
@@ -347,10 +347,27 @@ export class WatchdripV3 {
 		}
 	}
 
+    readControl() {
+        let value = "";
+        value = fs.readTextFile(WF_CTRL_FILE);
+        if (value) 
+        {
+            return Number(value);
+        }
+        return 0;
+    }
+
+    saveControl(value) {
+        fs.writeTextFile(WF_CTRL_FILE, value.toString());
+    }
+
     createWatchdripDir() {
         if (USE_FILE_INFO_STORAGE) {
             if (!fs.statSync(WF_INFO_DIR)) {
                 fs.mkdirSync(WF_INFO_DIR);
+            }
+            if (!fs.statSync(WF_INFO_DIR_LOCAL)) {
+                fs.mkdirSync(WF_INFO_DIR_LOCAL);
             }
         }
     }
@@ -367,6 +384,22 @@ export class WatchdripV3 {
 			    //this.updateLog("SET DATA");
 			    this.watchdripData.timeDiff = 0;
 			    this.nextUpdateTime=this.watchdripData.getBg().time+305000;
+                if(this.nextUpdateTime<=this.timeSensor.utc)
+                {
+                    let nextTime=this.readControl();
+                    if(nextTime===0)
+                    {
+                        this.saveControl(this.nextUpdateTime);
+                    }
+                    else if(this.nextUpdateTime<nextTime)
+                    {
+                        this.nextUpdateTime=nextTime;
+                    }
+                }
+                else
+                {
+                    this.saveControl(this.nextUpdateTime);
+                }
 			} catch (e) {
 			    //this.updateLog("readValueInfo error:" + e);
 		    }
