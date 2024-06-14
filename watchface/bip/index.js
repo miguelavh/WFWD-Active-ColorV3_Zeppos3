@@ -62,10 +62,11 @@ let trendBGAODStand="";
 
 const screenType = hmSetting.getScreenType();
 //let lastWatchdripData=null;
+let lastUpdateTime=null;
 
 const IMG = 'images/';
 const DW = 320;
-const DH = 390;
+const DH = 380;
 const T_WIDTH = 50;
 const T_HEIGHT = 94;
 const T_SPACE = 10;
@@ -276,7 +277,7 @@ WatchFace({
 		
 			editGroupLarge = hmUI.createWidget(hmUI.widget.WATCHFACE_EDIT_GROUP, mergeStyles(EDIT_GROUP_W_DEFAULTS, EDIT_LARGE_GROUP));
 
-			const dateline = DH/2+T_HEIGHT+T_SPACE/2+30;
+			const dateline = DH/2+T_HEIGHT+T_SPACE/2+21+6;
 			let largeGroupType = editGroupLarge.getProperty(hmUI.prop.CURRENT_TYPE);
 
 			function makeWeather(current_y) {
@@ -609,6 +610,17 @@ WatchFace({
 			bgTrendImageWidget.setProperty(hmUI.prop.SRC, bgObj.getArrowResource());
 		}
 	
+		if(screenType === hmSetting.screen_type.WATCHFACE)
+		{
+			let largeGroupType = editGroupLarge.getProperty(hmUI.prop.CURRENT_TYPE);
+			if(largeGroupType != CUSTOM_WIDGETS.NONE && largeGroupType != CUSTOM_WIDGETS.BIG_BG)
+			{
+				if(lastUpdateTime===null || lastUpdateTime!==bgObj.time)
+					lastUpdateTime=bgObj.time;
+				else
+					watchdrip.drawGraph();
+			}
+		}
     },
 	
     /**
@@ -633,6 +645,7 @@ WatchFace({
 
     build() {
                 try{
+					lastUpdateTime=null;
                     globalNS = getGlobal();
                     this.initView();
 					
@@ -652,6 +665,7 @@ WatchFace({
 					
                     watchdrip = globalNS.watchdrip;
                     watchdrip.prepare();
+					watchdrip.deactivateGraphRefresh();
 					//watchdrip=new Watchdrip();
                     watchdrip.setUpdateValueWidgetCallback(this.updateValuesWidget);
                     watchdrip.setUpdateTimesWidgetCallback(this.updateTimesWidget);

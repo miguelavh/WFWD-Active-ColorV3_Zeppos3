@@ -73,6 +73,7 @@ export class Watchdrip {
 		this.connected=false;
 		//this.lastWatchdog=null;
 		this.lastGraphDraw=this.timeSensor.utc-10000;
+        this.refreshGraph=true;
         /*
         typeof Graph
         */
@@ -82,6 +83,11 @@ export class Watchdrip {
     //call before any usage of the class instance
     prepare() {
         watchdrip = this.globalNS.watchdrip;
+    }
+
+    deactivateGraphRefresh()
+    {
+        this.refreshGraph=false;
     }
 
     start() {
@@ -312,8 +318,11 @@ export class Watchdrip {
     updateValuesWidget() {
         if (typeof this.updateValueWidgetCallback === "function") {
             this.updateValueWidgetCallback(this.watchdripData);
+            if(this.refreshGraph)
+            {
+                this.drawGraph();
+            }
         }
-        this.drawGraph();
     }
 
     updateTimesWidget() {

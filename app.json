@@ -100,6 +100,30 @@
         }
       ],
       "designWidth": 320
+    },
+    "gts4mini": {
+      "module": {
+        "watchface": {
+          "path": "watchface/entry/gts4mini/index",
+          "main": 1,
+          "editable": 1,
+          "lockscreen": 1
+        },
+        "app-side": {
+          "path": "app-side/index"
+        }
+      },
+      "platforms": [
+        {
+          "name": "gts4mini1",
+          "deviceSource": 246
+        },
+        {
+          "name": "gts4mini2",
+          "deviceSource": 247
+        }
+      ],
+      "designWidth": 336
     }
   },
   "i18n": {

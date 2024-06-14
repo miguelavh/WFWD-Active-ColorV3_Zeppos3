@@ -81,7 +81,8 @@ export class WatchdripV3 {
 		this.intervalTimerForce = null;
 		this.nextUpdateTime= null;
 		this.lastGraphDraw=this.timeSensor.utc-10000;
-        this.infoFile = new Path("full", WF_INFO_FILE);        
+        this.infoFile = new Path("full", WF_INFO_FILE);  
+        this.refreshGraph=true;  
         /*
         typeof Graph
         */
@@ -91,6 +92,11 @@ export class WatchdripV3 {
     //call before any usage of the class instance
     prepare() {
         watchdrip = this.globalNS.watchdrip;
+    }
+
+    deactivateGraphRefresh()
+    {
+        this.refreshGraph=false;
     }
 
     start() {
@@ -216,8 +222,11 @@ export class WatchdripV3 {
     updateValuesWidget() {
         if (typeof this.updateValueWidgetCallback === "function") {
             this.updateValueWidgetCallback(this.watchdripData);
+            if(this.refreshGraph)
+            {
+                this.drawGraph();
+            }
         }
-        this.drawGraph();
     }
 
     updateTimesWidget() {

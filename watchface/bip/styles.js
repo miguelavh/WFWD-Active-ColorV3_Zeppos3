@@ -97,19 +97,19 @@ const timeNumsAOD = range(10).map((v) => {
 });
 
 const DW = 320;
-const DH = 390;
+const DH = 380;
 const T_WIDTH = 50;
 const T_HEIGHT = 94;
 const T_SPACE = 10;
 
-const dateline = DH/2+T_HEIGHT+T_SPACE/2+30;
+const dateline = DH/2+T_HEIGHT+T_SPACE/2+21+6;
 const statNums = range(0, 10).map((v) => {
     return img(`status_numbers/s${v}.png`);
 });
 
 export const DIGITAL_TIME_H = {
-    hour_startX: px(55),
-    hour_startY: px(75),
+    hour_startX: px(71),
+    hour_startY: px(85+6),
     hour_zero: true,
     hour_space: 2,
     hour_align: hmUI.align.CENTER_H,
@@ -123,11 +123,11 @@ export const DIGITAL_TIME_H = {
     minute_array: timeNums,
     minute_follow: 1,
     am_x: px(198),
-    am_y: px(100),
+    am_y: px(100+6),
     am_sc_path: img('bigNum/am.png'),
     am_en_path: img('bigNum/am.png'),
     pm_x: px(198),
-    pm_y: px(100),
+    pm_y: px(100+6),
     pm_sc_path: img('bigNum/pm.png'),
     pm_en_path: img('bigNum/pm.png'),
     second_zero: true,
@@ -140,8 +140,8 @@ export const DIGITAL_TIME_H = {
 };
 
 export const DIGITAL_TIME_H_BIG = {
-    hour_startX: px(71-10),
-    hour_startY: px(234-30),
+    hour_startX: px(71),
+    hour_startY: px(234+6),
     hour_zero: true,
     hour_space: 2,
     hour_align: hmUI.align.CENTER_H,
@@ -155,11 +155,11 @@ export const DIGITAL_TIME_H_BIG = {
     minute_array: timeNums,
     minute_follow: 1,
     am_x: px(198),
-    am_y: px(234),
+    am_y: px(234+6),
     am_sc_path: img('bigNum/am.png'),
     am_en_path: img('bigNum/am.png'),
     pm_x: px(198),
-    pm_y: px(234),
+    pm_y: px(234+6),
     pm_sc_path: img('bigNum/pm.png'),
     pm_en_path: img('bigNum/pm.png'),
     second_zero: true,
@@ -174,7 +174,7 @@ export const DIGITAL_TIME_H_BIG = {
 export const DIGITAL_TIME_V = {
 	hour_zero: true,
     hour_startX: (DW-T_SPACE)/2-T_WIDTH,
-    hour_startY: (DH-T_SPACE)/2-T_HEIGHT+4,
+    hour_startY: (DH-T_SPACE)/2-T_HEIGHT+5,
     hour_align: hmUI.align.CENTER_H,
     hour_array: timeNums,
     hour_space: T_SPACE,
@@ -206,8 +206,8 @@ export const DIGITAL_TIME_V = {
 };
 
 export const DIGITAL_TIME_AOD_V = {
-    hour_startX: px(52),
-    hour_startY: px(67),
+    hour_startX: px(71),
+    hour_startY: px(77+6),
     hour_zero: true,
     hour_space: 2,
     hour_align: hmUI.align.CENTER_H,
@@ -256,11 +256,11 @@ export const DIGITAL_TIME_AOD_V = {
 
 export const LOG = {
     x: px(0),
-    y: px(150),
+    y: px(123+6),
     w: px(320),
     h: px(100),
     color: Colors.defaultTransparent,
-    text_size: px(40),
+    text_size: px(33),
     align_h: hmUI.align.CENTER_H,
     align_v: hmUI.align.TOP,
     text_style: hmUI.text_style.NONE,
@@ -268,8 +268,8 @@ export const LOG = {
 
 
 export const BG_VALUE_TEXT_IMG_AOD = {
-    x: px(18),
-    y: px(210),
+    x: px(38),
+    y: px(211+6),
     w: px(203),
 	h_space: 2,	
     align_h: hmUI.align.CENTER_H,
@@ -279,8 +279,8 @@ export const BG_VALUE_TEXT_IMG_AOD = {
 };
 
 export const BG_VALUE_TEXT_IMG_LOW_AOD = {
-    x: px(18),
-    y: px(210),
+    x: px(38),
+    y: px(211+6),
     w: px(203),
 	h_space: 2,		
     align_h: hmUI.align.CENTER_H,
@@ -290,8 +290,8 @@ export const BG_VALUE_TEXT_IMG_LOW_AOD = {
 };
 
 export const BG_VALUE_TEXT_IMG_HIGH_AOD = {
-    x: px(18),
-    y: px(210),
+    x: px(38),
+    y: px(211+6),
     w: px(203),
 	h_space: 2,		
     align_h: hmUI.align.CENTER_H,
@@ -346,9 +346,9 @@ export const BG_VALUE_TEXT_IMG_HIGH_AOD_STAND = {
 };
 
 export const BG_VALUE_NO_DATA_TEXT = {
-    x: px(20),
-    y: px(200),
-    w: px(135),
+    x: px(69),
+    y: px(230+6),
+    w: px(131),
     h: px(47),
     color: Colors.white,
     text_size: px(34),
@@ -360,8 +360,8 @@ export const BG_VALUE_NO_DATA_TEXT = {
 };
 
 export const BG_VALUE_NO_DATA_TEXT_BIG = {
-    x: px(37-20),
-    y: px(94-30),
+    x: px(37),
+    y: px(94+6),
     w: px(197),
     h: px(80),
 	h_space: 1,		
@@ -375,8 +375,8 @@ export const BG_VALUE_NO_DATA_TEXT_BIG = {
 };
 
 export const BG_VALUE_TEXT_IMG = {
-    x: px(20-5),
-    y: px(200),
+    x: px(58),
+    y: px(230+6),
     w: px(135),
 	h_space: 1,		
     align_h: hmUI.align.CENTER_H,
@@ -387,8 +387,8 @@ export const BG_VALUE_TEXT_IMG = {
 };
 
 export const BG_VALUE_TEXT_IMG_LOW = {
-    x: px(20-5),
-    y: px(200),
+    x: px(58),
+    y: px(230+6),
     w: px(135),
 	h_space: 1,		
     align_h: hmUI.align.CENTER_H,
@@ -399,8 +399,8 @@ export const BG_VALUE_TEXT_IMG_LOW = {
 };
 
 export const BG_VALUE_TEXT_IMG_HIGH = {
-    x: px(20)-5,
-    y: px(200),
+    x: px(58),
+    y: px(230+6),
     w: px(135),
 	h_space: 1,		
     align_h: hmUI.align.CENTER_H,
@@ -410,10 +410,9 @@ export const BG_VALUE_TEXT_IMG_HIGH = {
     show_level: hmUI.show_level.ONLY_NORMAL
 };
 
-
 export const BG_VALUE_TEXT_IMG_BIG = {
-    x: px(37-25),
-    y: px(99-25),
+    x: px(37),
+    y: px(99+6),
     w: px(197),
 	h_space: 1,		
     align_h: hmUI.align.CENTER_H,
@@ -424,8 +423,8 @@ export const BG_VALUE_TEXT_IMG_BIG = {
 };
 
 export const BG_VALUE_TEXT_IMG_LOW_BIG = {
-    x: px(37-25),
-    y: px(99-25),
+    x: px(37),
+    y: px(99+6),
     w: px(197),
 	h_space: 1,		
     align_h: hmUI.align.CENTER_H,
@@ -436,8 +435,8 @@ export const BG_VALUE_TEXT_IMG_LOW_BIG = {
 };
 
 export const BG_VALUE_TEXT_IMG_HIGH_BIG = {
-    x: px(37-25),
-    y: px(99-25),
+    x: px(37),
+    y: px(99+6),
     w: px(197),
 	h_space: 1,		
     align_h: hmUI.align.CENTER_H,
@@ -449,7 +448,7 @@ export const BG_VALUE_TEXT_IMG_HIGH_BIG = {
 
 export const BG_VALUE_TEXT_IMG_BIG_AOD = {
     x: px(12),
-    y: px(150),
+    y: px(150+6),
     w: px(150),
     align_h: hmUI.align.CENTER_H,
     dot_image: img('bgBigNumAOD/d.png'),
@@ -461,7 +460,7 @@ export const BG_VALUE_TEXT_IMG_BIG_AOD = {
 
 export const BG_VALUE_TEXT_IMG_LOW_BIG_AOD = {
     x: px(12),
-    y: px(150),
+    y: px(150+6),
     w: px(150),
     align_h: hmUI.align.CENTER_H,
     dot_image: img('bgBigNumAODLow/d.png'),
@@ -473,7 +472,7 @@ export const BG_VALUE_TEXT_IMG_LOW_BIG_AOD = {
 
 export const BG_VALUE_TEXT_IMG_HIGH_BIG_AOD = {
     x: px(12),
-    y: px(150),
+    y: px(150+6),
     w: px(150),
     align_h: hmUI.align.CENTER_H,
     dot_image: img('bgBigNumAODHigh/d.png'),
@@ -484,8 +483,8 @@ export const BG_VALUE_TEXT_IMG_HIGH_BIG_AOD = {
 };
 
 export const BG_TIME_TEXT = {
-    x: px(147-5),
-    y: px(231-5),
+    x: px(187),
+    y: px(261+6),
     w: px(80),
     h: px(30),
     color: Colors.defaultTransparent,
@@ -497,8 +496,8 @@ export const BG_TIME_TEXT = {
 };
 
 export const BG_DELTA_TEXT = {
-    x: px(140-5),
-    y: px(195),
+    x: px(180),
+    y: px(225+6),
     w: px(57),
     h: px(41),
     color: Colors.defaultTransparent,
@@ -510,8 +509,8 @@ export const BG_DELTA_TEXT = {
 };
 
 export const BG_TIME_TEXT_AOD = {
-    x: px(135-20),
-    y: px(148),
+    x: px(135),
+    y: px(148+6),
     w: px(123),
     color: Colors.defaultTransparent,
     text_size: px(33),
@@ -522,21 +521,20 @@ export const BG_TIME_TEXT_AOD = {
 };
 
 export const BG_DELTA_TEXT_AOD = {
-    x: px(29-20),
-    y: px(148),
+    x: px(29),
+    y: px(148+6),
     w: px(90),
     color: Colors.defaultTransparent,
-    text_size: px(33),
+    text_size: px(40),
     align_h: hmUI.align.RIGHT,
     align_v: hmUI.align.TOP,
     text_style: hmUI.text_style.NONE,
     show_level: hmUI.show_level.ONAL_AOD
 };
 
-
 export const BG_TIME_TEXT_BIG = {
-    x: px(146-25),
-    y: px(184-30),
+    x: px(146),
+    y: px(184+6),
     w: px(100),
     h: px(40),
     color: Colors.defaultTransparent,
@@ -548,8 +546,8 @@ export const BG_TIME_TEXT_BIG = {
 };
 
 export const BG_DELTA_TEXT_BIG = {
-    x: px(75-25),
-    y: px(184-30),
+    x: px(75),
+    y: px(184+6),
     w: px(61),
     h: px(40),
     color: Colors.defaultTransparent,
@@ -560,11 +558,10 @@ export const BG_DELTA_TEXT_BIG = {
     show_level: hmUI.show_level.ONLY_NORMAL
 };
 
-
 export const BG_TREND_IMAGE = {
     src: 'watchdrip/arrows/None.png',
-    x: px(193),
-    y: px(195),
+    x: px(228),
+    y: px(225+6),
     w: px(45),
     h: px(45),
     show_level: hmUI.show_level.ONLY_NORMAL
@@ -573,8 +570,8 @@ export const BG_TREND_IMAGE = {
 export const BG_TREND_IMAGE_AOD = {
     src: 'watchdrip/arrowsAOD/None.png',
 	
-    x: px(241-30),
-    y: px(211),
+    x: px(241),
+    y: px(211+6),
     w: px(45),
 	align_h: hmUI.align.LEFT,
 //    x: px(94+80),
@@ -599,8 +596,8 @@ export const BG_TREND_IMAGE_AOD_STAND = {
 
 export const BG_TREND_IMAGE_BIG = {
     src: 'watchdrip/arrows/None.png',
-    x: px(230-35),
-    y: px(99-20),
+    x: px(230),
+    y: px(99+6),
     w: px(45),
     h: px(45),
     show_level: hmUI.show_level.ONLY_NORMAL
@@ -609,7 +606,7 @@ export const BG_TREND_IMAGE_BIG = {
 export const BG_TREND_IMAGE_BIG_AOD = {
     src: 'watchdrip/arrowsAOD/None.png',
     x: px(150),
-    y: px(145),
+    y: px(145+6),
     w: px(45),
     h: px(45),
     show_level: hmUI.show_level.ONAL_AOD
@@ -618,8 +615,8 @@ export const BG_TREND_IMAGE_BIG_AOD = {
 export const BG_STALE_IMG = {
 //    x: px(69-45),
 //    y: px(135-10),
-    x: px(48),
-    y: px(231),
+    x: px(78),
+    y: px(261+6),
     src: 'watchdrip/stale.png',
     visible: false,
     show_level: hmUI.show_level.ONLY_NORMAL
@@ -628,8 +625,8 @@ export const BG_STALE_IMG = {
 export const BG_STALE_IMG_BIG = {
 //    x: px(69-45),
 //    y: px(135-10),
-    x: px(37-20),
-    y: px(145-30),
+    x: px(37),
+    y: px(145+6),
 	w: px(197),
     src: 'watchdrip/stale.png',
     visible: false,
@@ -637,8 +634,8 @@ export const BG_STALE_IMG_BIG = {
 };
 
 export const IMG_LOADING_PROGRESS = {
-    x: px(110),
-    y: px(210),
+    x: px(142),
+    y: px(240+6),
     src: 'watchdrip/progress.png',
     angle: 0,
     center_x: 20,
@@ -648,8 +645,8 @@ export const IMG_LOADING_PROGRESS = {
 };
 
 export const IMG_LOADING_PROGRESS_BIG = {
-    x: px(112-20),
-    y: px(109-30),
+    x: px(112),
+    y: px(109+6),
     src: 'watchdrip/progress_big.png',
     angle: 0,
     center_x: 35.5,
@@ -660,7 +657,7 @@ export const IMG_LOADING_PROGRESS_BIG = {
 
 export const IMG_STATUS_BT_DISCONNECTED = {
     x: px(33),
-    y: px(49),
+    y: px(49+6),
     src: img('status/bt_disconnect.png'),
     type: hmUI.system_status.DISCONNECT,
     show_level: hmUI.show_level.ONLY_NORMAL
@@ -673,7 +670,6 @@ export const CUSTOM_WIDGETS = {
     BIG_BG: 100015
 };
 // END edit group treatments aaps/xdrip data
-
 
 // BEGIN edit group default styles
 const editWidgetW = 68;
@@ -724,7 +720,7 @@ const editGroupTypesLarge = editGroupTypes.concat(
 
 export const EDIT_GROUP_W_DEFAULTS = {
     x: px(25),
-    w: px(271),
+    w: px(270+6),
     h: px(66),
     select_image: img('mask/select-large.png'),
     un_select_image: img('mask/un_select-large.png'),
@@ -786,7 +782,7 @@ export const EDIT_DEFAULT_TEXT_IMG = {
 
 // BEGIN Top Edit Widgets
 const topX = 125;
-const topY = 110;
+const topY = 110+6;
 
 export const EDIT_TOP_GROUP = {
     edit_id: 101,
@@ -826,7 +822,7 @@ export const EDIT_TOP_TEXT_IMG = {
 
 // BEGIN Wide Edit Widgets
 const largeX = 66;
-const largeY = 285;
+const largeY = 285+6;
 
 export const EDIT_GROUP_DEFAULTS = {
     w: px(editWidgetW),
@@ -848,20 +844,20 @@ export const EDIT_LARGE_GROUP = {
     select_image: img('mask/select-large.png'),
     un_select_image: img('mask/un_select-large.png'),
     x: px(25),
-    y: px(171),
-    w: px(271),
-    h: px(66),
+    y: px(170+6),
+    w: px(270),
+    h: px(72),
     optional_types: editGroupTypesLarge,
     count: editGroupTypesLarge.length,
     default_type: CUSTOM_WIDGETS.GRAPH_LOW_HIGH_LINES,
 };
 
 // Default styles for all Wide IMG widgets
-const LARGE_IMAGE_Y_SHIFT = 30;
+const LARGE_IMAGE_Y_SHIFT = 37;
 
 export const EDIT_LARGE_IMG = {
-    x: px(largeX-40),
-    y: px(largeY + LARGE_IMAGE_Y_SHIFT-10)
+    x: px(largeX),
+    y: px(largeY + LARGE_IMAGE_Y_SHIFT)
 };
 
 // Styles for all Wide ARC_PROGRESS widgets
@@ -889,7 +885,7 @@ export const EDIT_LARGE_TEXT_IMG = {
 
 export const GRAPH_SETTINGS = {
     x: 25,
-    y: 110,
+    y: 100+6,
     w: 270,
     h: 140,
     point_size: 7,
