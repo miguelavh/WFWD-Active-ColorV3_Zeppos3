@@ -649,17 +649,17 @@ WatchFace({
                     globalNS = getGlobal();
                     this.initView();
 					
-					try
-					{
-						const systemInfo = hmSetting.getSystemInfo();
-						if(Number(systemInfo.osVersion)>=3)
+					//try
+					//{
+					//	const systemInfo = hmSetting.getSystemInfo();
+					//	if(Number(systemInfo.osVersion)>=3)
 							globalNS.watchdrip = new WatchdripV3();
-						else
-							globalNS.watchdrip = new Watchdrip();
-					}catch(e)
-					{
-						globalNS.watchdrip = new Watchdrip();
-					}
+					//	else
+					//		globalNS.watchdrip = new Watchdrip();
+					//}catch(e)
+					//{
+					//	globalNS.watchdrip = new Watchdrip();
+					//}
 					//console.log(`firmwareVersion = ${systemInfo.firmwareVersion}`);
 					//console.log(`minAPI = ${systemInfo.minAPI}`);
 					
